@@ -1,0 +1,75 @@
+/*QUIZ GAME*/
+
+#include <iostream> // Header file for input and output
+#include <vector>   // Header file for using vectors
+#include <string>   // Header file for using strings
+
+using namespace std;
+
+// Structure to represent a quiz question
+struct Question {
+    string questionText;         // The question text
+    vector<string> options;      // Multiple choice options
+    int correctOption;           // Index of the correct option (1-based)
+};
+
+// Function to display a question and its options
+void displayQuestion(const Question &q, int questionNumber) {
+    cout << "\nQuestion " << questionNumber << ": " << q.questionText << endl;
+    for (size_t i = 0; i < q.options.size(); ++i) {
+        cout << i + 1 << ". " << q.options[i] << endl;
+    }
+    cout << "Your answer (1-" << q.options.size() << "): ";
+}
+
+int main() {
+    // List of quiz questions
+    vector<Question> quiz = {
+        {"Which is the largest state in India by area?", {"Uttar Pradesh", "Rajasthan", "Madhya Pradesh", "Maharashtra"}, 2},
+        {"Which river is known as the 'Sorrow of Bihar'?", {"Ganga", "Kosi", "Son", "Gandak"}, 2},
+        {"What is the capital of Andhra Pradesh?", {"Vishakhapatnam", "Amaravati", "Hyderabad", "Tirupati"}, 2},
+        {"Which mountain range is also known as the 'Sahyadri Hills'?", {"Aravalli", "Vindhya", "Eastern Ghats", "Western Ghats"}, 4},
+        {"Which Indian state has the longest coastline?", {"Gujarat", "Tamil Nadu", "Andhra Pradesh", "Maharashtra"}, 1}
+    };
+
+    int score = 0; // To keep track of the score
+
+    cout << "Welcome to the Quiz Game!\n";
+    
+    string userName; // Variable to store the user's name
+    cout << "Please enter your name: ";
+    getline(cin, userName); // Get the user's name
+
+    cout << "Hello, " << userName << "! There are " << quiz.size() << " questions. Good luck!\n";
+
+    // Loop through each question in the quiz
+    for (size_t i = 0; i < quiz.size(); ++i) {
+        displayQuestion(quiz[i], i + 1); // Display the current question
+
+        int userAnswer; // Variable to store the user's answer
+        cin >> userAnswer; // Get the user's answer
+
+        // Check if the answer is correct
+        if (userAnswer == quiz[i].correctOption) {
+            cout << "Correct!\n";
+            ++score; // Increment the score
+        } else {
+            cout << "Wrong! The correct answer was: " << quiz[i].options[quiz[i].correctOption - 1] << "\n";
+        }
+    }
+
+    // Display the final score and feedback
+    cout << "\nQuiz Over!\n";
+    cout << "Your final score is: " << score << "/" << quiz.size() << endl;
+
+    // Provide feedback based on the score
+    if (score == quiz.size()) {
+        cout << "Excellent work, " << userName << "! You got a perfect score!\n";
+    } else if (score >= quiz.size() / 2) {
+        cout << "Good job, " << userName << "! You passed the quiz.\n";
+    } else {
+        cout << "Better luck next time, " << userName << "!\n";
+    }
+
+    return 0; // End of the program
+}
